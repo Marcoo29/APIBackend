@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import com.uade.tpo.ecommerce.entity.Operation;
-import com.uade.tpo.ecommerce.entity.enums.MetodoPago;
+import com.uade.tpo.ecommerce.entity.enums.PayMethod;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,5 +16,5 @@ public interface OperationService {
 
     public Optional<Operation> getOperationById(Long operationId);
 
-    public Operation createOperation(BigDecimal total, LocalDateTime fecha, MetodoPago metodoPago);
+    public Operation createOperation(BigDecimal total, LocalDateTime fecha, PayMethod metodoPago);
 }

@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.uade.tpo.ecommerce.entity.Operation;
-import com.uade.tpo.ecommerce.entity.enums.MetodoPago;
+import com.uade.tpo.ecommerce.entity.enums.PayMethod;
 import com.uade.tpo.ecommerce.repository.OperationRepository;
 import com.uade.tpo.ecommerce.service.inter.OperationService;
 
@@ -28,7 +28,7 @@ public class OperationServiceImpl implements OperationService {
         return operationRepository.findById(operationId);
     }
 
-     public Operation createOperation(BigDecimal total, LocalDateTime fecha, MetodoPago metodoPago) {
+     public Operation createOperation(BigDecimal total, LocalDateTime fecha, PayMethod metodoPago) {
         return operationRepository.save(new Operation(total, fecha, metodoPago));
     }
 }
