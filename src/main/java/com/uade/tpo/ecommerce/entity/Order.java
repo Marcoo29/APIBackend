@@ -10,9 +10,9 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Cart {
+public class Order {
 
-    public Cart() {
+    public Order() {
     }
 
     

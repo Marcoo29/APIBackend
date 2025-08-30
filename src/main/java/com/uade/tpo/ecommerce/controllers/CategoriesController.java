@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.uade.tpo.ecommerce.entity.dto.CategoryRequest;
 import com.uade.tpo.ecommerce.entity.Category;
 import com.uade.tpo.ecommerce.exceptions.CategoryDuplicateException;
-import com.uade.tpo.ecommerce.service.CategoryService;
+import com.uade.tpo.ecommerce.service.inter.CategoryService;
 
 
 @RestController

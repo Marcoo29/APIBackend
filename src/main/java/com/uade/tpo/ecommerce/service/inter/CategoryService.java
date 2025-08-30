@@ -1,4 +1,4 @@
-package com.uade.tpo.ecommerce.service;
+package com.uade.tpo.ecommerce.service.inter;
 
 import java.util.Optional;
 
