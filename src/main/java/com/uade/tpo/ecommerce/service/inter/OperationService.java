@@ -16,5 +16,5 @@ public interface OperationService {
 
     public Optional<Operation> getOperationById(Long operationId);
 
-    public Operation createOperation(BigDecimal total, LocalDateTime fecha, PayMethod metodoPago);
+    public Operation createOperation(BigDecimal total, LocalDateTime date, PayMethod payMethod);
 }

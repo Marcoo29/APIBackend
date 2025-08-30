@@ -28,7 +28,7 @@ public class OperationServiceImpl implements OperationService {
         return operationRepository.findById(operationId);
     }
 
-     public Operation createOperation(BigDecimal total, LocalDateTime fecha, PayMethod metodoPago) {
-        return operationRepository.save(new Operation(total, fecha, metodoPago));
+     public Operation createOperation(BigDecimal total, LocalDateTime date, PayMethod payMethod) {
+        return operationRepository.save(new Operation(total, date, payMethod));
     }
 }
