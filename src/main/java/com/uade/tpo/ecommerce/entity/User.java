@@ -1,15 +1,18 @@
 package com.uade.tpo.ecommerce.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 @Data
 @Entity
-
 public class User {
 
     @Id
@@ -25,12 +28,13 @@ public class User {
     @Column
     private String lastname;
 
-    @Column
-    private String email;
+   @Column
+    private String address;  
 
     @Column
-    private String password;
+    private ArrayList<String> role; 
 
-    @Column
-    private String address; 
+    @OneToMany(mappedBy = "users") // user es la FK para vincular la tabla User con Order
+    private List<Order> orders;
+
 }
