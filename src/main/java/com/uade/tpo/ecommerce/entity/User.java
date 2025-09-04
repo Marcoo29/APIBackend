@@ -1,7 +1,11 @@
 package com.uade.tpo.ecommerce.entity;
 
+import java.io.ObjectInputFilter.Status;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.uade.tpo.ecommerce.entity.enums.Role;
+import com.uade.tpo.ecommerce.entity.enums.UserStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,7 +36,10 @@ public class User {
     private String address;  
 
     @Column
-    private ArrayList<String> role; 
+    private Role role; 
+
+    @Column
+    private UserStatus status;
 
     @OneToMany(mappedBy = "users") // user es la FK para vincular la tabla User con Order
     private List<Order> orders;

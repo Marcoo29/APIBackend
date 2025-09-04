@@ -2,6 +2,9 @@ package com.uade.tpo.ecommerce.entity.dto;
 
 import java.util.ArrayList;
 
+import com.uade.tpo.ecommerce.entity.enums.Role;
+import com.uade.tpo.ecommerce.entity.enums.UserStatus;
+
 import lombok.Data;
 
 @Data
@@ -11,5 +14,6 @@ public class UserRequest {
     private String name;
     private String lastname;
     private String address;  
-    private ArrayList<String> role; 
+    private Role role; 
+    private UserStatus status;
 }
