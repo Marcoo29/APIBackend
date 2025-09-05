@@ -10,4 +10,7 @@ import com.uade.tpo.ecommerce.entity.Product;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "select p from Product p where p.name = ?1")
     Product findByName(String name);
+
+    @Query(value = "select p.stock from Product p where p.id = ?1")
+    int findStockById(Long productId);
 }

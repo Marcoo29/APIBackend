@@ -1,7 +1,6 @@
 package com.uade.tpo.ecommerce.entity;
 
 import com.uade.tpo.ecommerce.entity.enums.ProductStatus;
-import com.uade.tpo.ecommerce.entity.enums.UserStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

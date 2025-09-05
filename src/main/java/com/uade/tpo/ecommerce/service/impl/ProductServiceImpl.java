@@ -1,5 +1,4 @@
 package com.uade.tpo.ecommerce.service.impl;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,8 @@ public class ProductServiceImpl implements ProductService{
         return productRepository.findById(productId);
     }
 
-    public Optional<Product> getProductAvailabilityById(Long productId) {
-        return productRepository.findById(productId);
+    public int getProductStockById(Long productId) {
+        return productRepository.findStockById(productId);
     }
 
     public Product createProduct(Product newProduct) throws ProductDuplicateException {
@@ -37,11 +36,16 @@ public class ProductServiceImpl implements ProductService{
     }
 
     public void deleteProduct(Long productId) {
-        productRepository.deleteById(productId); //cambiar
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            product.setProductStatus(com.uade.tpo.ecommerce.entity.enums.ProductStatus.NOT_AVAILABLE);
+            productRepository.save(product);
+        }
     }
 
     public void updateProduct(Long productId) {
-
+        
     }
 
 }
