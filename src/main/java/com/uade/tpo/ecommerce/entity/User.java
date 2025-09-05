@@ -38,7 +38,7 @@ public class User {
     private Role role; 
 
     @Column
-    private UserStatus status;
+    private UserStatus status = UserStatus.ACTIVE; // esta activo por default
 
     @OneToMany(mappedBy = "users") // user es la FK para vincular la tabla User con Order
     private List<Order> orders;
