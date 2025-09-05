@@ -1,7 +1,6 @@
 package com.uade.tpo.ecommerce.entity;
 
-import java.io.ObjectInputFilter.Status;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import com.uade.tpo.ecommerce.entity.enums.Role;

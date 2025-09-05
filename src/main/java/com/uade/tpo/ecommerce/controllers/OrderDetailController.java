@@ -8,7 +8,7 @@ import com.uade.tpo.ecommerce.service.inter.OrderDetailService;
 
 @RestController
 @RequestMapping("orderDetail")
-public class OrderDetail {
+public class OrderDetailController {
 
     @Autowired OrderDetailService orderDetailService;
     

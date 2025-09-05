@@ -32,3 +32,4 @@ public class OperationServiceImpl implements OperationService {
         return operationRepository.save(new Operation(total, date, payMethod));
     }
 }
+
