@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.uade.tpo.ecommerce.entity.Operation;
 import com.uade.tpo.ecommerce.entity.Product;
-import com.uade.tpo.ecommerce.entity.enums.OrderStatus;
+import com.uade.tpo.ecommerce.entity.enums.OperationStatus;
 import com.uade.tpo.ecommerce.entity.enums.PayMethod;
 import com.uade.tpo.ecommerce.repository.OperationRepository;
 import com.uade.tpo.ecommerce.service.inter.OperationService;
@@ -30,15 +30,15 @@ public class OperationServiceImpl implements OperationService {
         return operationRepository.findById(operationId);
     }
 
-     public Operation createOperation(BigDecimal total, LocalDateTime date, OrderStatus orderStatus, PayMethod payMethod) {
-        return operationRepository.save(new Operation(total, date, orderStatus, payMethod));
+     public Operation createOperation(BigDecimal total, LocalDateTime date, OperationStatus operationStatus, PayMethod payMethod) {
+        return operationRepository.save(new Operation(total, date, operationStatus, payMethod));
     }
 
     public void deleteOperation(Long operationId) {
         Optional<Operation> optionalOperation = operationRepository.findById(operationId);
         if (optionalOperation.isPresent()) {
             Operation operation = optionalOperation.get();
-            operation.setOrderStatus(com.uade.tpo.ecommerce.entity.enums.OrderStatus.CANCELLED);
+            operation.setOperationStatus(com.uade.tpo.ecommerce.entity.enums.OperationStatus.CANCELLED);
             operationRepository.save(operation);
         }
     }

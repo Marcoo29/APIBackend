@@ -1,6 +1,6 @@
 package com.uade.tpo.ecommerce.entity;
 
-import com.uade.tpo.ecommerce.entity.enums.OrderStatus;
+import com.uade.tpo.ecommerce.entity.enums.OperationStatus;
 import com.uade.tpo.ecommerce.entity.enums.PayMethod;
 
 import java.math.BigDecimal;
@@ -22,10 +22,10 @@ public class Operation {
     public Operation() {
     }
 
-    public Operation(BigDecimal total, LocalDateTime date, OrderStatus orderStatus, PayMethod payMethod) {
+    public Operation(BigDecimal total, LocalDateTime date, OperationStatus operationStatus, PayMethod payMethod) {
         this.total = total;
         this.date = date;
-        this.orderStatus = orderStatus;
+        this.operationStatus = operationStatus;
         this.payMethod = payMethod;
     }
 
@@ -40,7 +40,7 @@ public class Operation {
     private LocalDateTime date;
 
     @Column 
-    private OrderStatus orderStatus;
+    private OperationStatus operationStatus;
 
     @Column
     private PayMethod payMethod;

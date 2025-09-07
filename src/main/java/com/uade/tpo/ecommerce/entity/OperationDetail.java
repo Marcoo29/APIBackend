@@ -13,9 +13,9 @@ import lombok.Data;
 @Entity
 @Data
 @Table
-public class OrderDetail {
+public class OperationDetail {
  
-    public OrderDetail() {
+    public OperationDetail() {
  
     }
  

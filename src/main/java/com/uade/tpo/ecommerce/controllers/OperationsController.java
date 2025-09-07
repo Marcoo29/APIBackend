@@ -53,7 +53,7 @@ public class OperationsController {
             Operation result = operationService.createOperation(
                 operationRequest.getTotal(),
                 operationRequest.getDate(),
-                operationRequest.getOrderstatus(),
+                operationRequest.getOperationStatus(),
                 operationRequest.getPayMethod()
                 
                 );
@@ -64,4 +64,7 @@ public class OperationsController {
     public Void deleteOperation(@PathVariable Long operationId) {
         return null;
     }
+
+    
+
 }

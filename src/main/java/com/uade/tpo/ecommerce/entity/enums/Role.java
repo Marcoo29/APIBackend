@@ -1,5 +1,6 @@
 package com.uade.tpo.ecommerce.entity.enums;
 
-public class Role {
-
+public enum Role {
+    ADMIN,
+    USER
 }
