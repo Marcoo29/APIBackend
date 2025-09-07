@@ -28,6 +28,4 @@ public class Category {
     @Column
     private String description;
 
-    @OneToMany(mappedBy = "category")
-    private List<Product> product;
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,8 +61,7 @@ public class UserController {
         }
         return ResponseEntity.ok(users);
     }
-
-    @PatchMapping("/{userId}/update")
+    @PutMapping("/{userId}/update")
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody UserRequest userRequest){
         Optional<User> userOptional = userService.getUserById(userId);
 
@@ -70,11 +70,11 @@ public class UserController {
         }
 
         User user = userOptional.get();
-        user.setUsername(userRequest.getUsername());
-        user.setName(userRequest.getName());
-        user.setLastname(userRequest.getLastname());
-        user.setAddress(userRequest.getAddress());
-        user.setRole(userRequest.getRole());
+        if (userRequest.getUsername() != null) user.setUsername(userRequest.getUsername());
+        if (userRequest.getName() != null) user.setName(userRequest.getName());
+        if (userRequest.getLastname() != null) user.setLastname(userRequest.getLastname());
+        if (userRequest.getAddress() != null) user.setAddress(userRequest.getAddress());
+        if (userRequest.getRole() != null) user.setRole(userRequest.getRole());
 
         User updatedUser = userService.updateUser(user);
 

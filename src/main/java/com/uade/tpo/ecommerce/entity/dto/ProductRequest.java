@@ -1,5 +1,6 @@
 package com.uade.tpo.ecommerce.entity.dto;
 
+import com.uade.tpo.ecommerce.entity.Category;
 import com.uade.tpo.ecommerce.entity.enums.ProductStatus;
 
 
@@ -15,4 +16,5 @@ public class ProductRequest {
     private String description;
     private String fitFor;
     private ProductStatus status;
+    private Category category;
 }

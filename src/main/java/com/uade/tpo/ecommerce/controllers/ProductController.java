@@ -65,6 +65,7 @@ public class ProductController {
         product.setDescription(productRequest.getDescription());
         product.setFitFor(productRequest.getFitFor());
         product.setProductStatus(productRequest.getStatus());
+        product.setCategory(productRequest.getCategory());
 
         Product result = productService.createProduct(product);
 
