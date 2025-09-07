@@ -1,6 +1,5 @@
 package com.uade.tpo.ecommerce.entity.dto;
 
-import java.util.ArrayList;
 
 import com.uade.tpo.ecommerce.entity.enums.Role;
 import com.uade.tpo.ecommerce.entity.enums.UserStatus;
