@@ -33,8 +33,8 @@ public class OrderDetail {
     public float subtotal = precio_unitario*cantidad;
 
     @ManyToOne
-    @JoinColumn(name = "orders_id", nullable = false)
-    private Order orders_id;
+    @JoinColumn(name = "operation_id", nullable = false)
+    private Operation operation_id;
     
 
 }

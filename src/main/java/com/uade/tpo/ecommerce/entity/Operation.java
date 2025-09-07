@@ -1,5 +1,6 @@
 package com.uade.tpo.ecommerce.entity;
 
+import com.uade.tpo.ecommerce.entity.enums.OrderStatus;
 import com.uade.tpo.ecommerce.entity.enums.PayMethod;
 
 import java.math.BigDecimal;
@@ -10,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
@@ -35,7 +38,13 @@ public class Operation {
     @Column
     private LocalDateTime date;
 
+    @Column 
+    private OrderStatus orderStatus;
+
     @Column
     private PayMethod payMethod;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

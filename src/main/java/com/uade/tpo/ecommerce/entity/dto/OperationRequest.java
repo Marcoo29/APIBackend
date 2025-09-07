@@ -1,5 +1,6 @@
 package com.uade.tpo.ecommerce.entity.dto;
 
+import com.uade.tpo.ecommerce.entity.enums.OrderStatus;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -12,5 +13,6 @@ public class OperationRequest {
     private int id;
     private BigDecimal total;
     private LocalDateTime date;
+    private OrderStatus orderstatus;
     private PayMethod payMethod;
 }

@@ -1,5 +1,7 @@
 package com.uade.tpo.ecommerce.entity.enums;
 
-public class OrderStatus {
-
+public enum OrderStatus {
+    ENTREGADO,
+    CANCELADO, 
+    EN_PROCESO,
 }
