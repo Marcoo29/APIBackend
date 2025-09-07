@@ -22,9 +22,10 @@ public class Operation {
     public Operation() {
     }
 
-    public Operation(BigDecimal total, LocalDateTime date, PayMethod payMethod) {
+    public Operation(BigDecimal total, LocalDateTime date, OrderStatus orderStatus, PayMethod payMethod) {
         this.total = total;
         this.date = date;
+        this.orderStatus = orderStatus;
         this.payMethod = payMethod;
     }
 

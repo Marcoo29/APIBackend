@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.uade.tpo.ecommerce.entity.Operation;
 import com.uade.tpo.ecommerce.entity.dto.OperationRequest;
 import com.uade.tpo.ecommerce.service.inter.OperationService;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -51,9 +53,15 @@ public class OperationsController {
             Operation result = operationService.createOperation(
                 operationRequest.getTotal(),
                 operationRequest.getDate(),
+                operationRequest.getOrderstatus(),
                 operationRequest.getPayMethod()
                 
                 );
         return ResponseEntity.created(URI.create("/operations/" + result.getId())).body(result);
+    }
+
+    @PutMapping
+    public Void deleteOperation(@PathVariable Long operationId) {
+        return null;
     }
 }
