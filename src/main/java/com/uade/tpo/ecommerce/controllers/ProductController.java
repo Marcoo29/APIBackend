@@ -65,7 +65,10 @@ public class ProductController {
         product.setDescription(productRequest.getDescription());
         product.setFitFor(productRequest.getFitFor());
         product.setProductStatus(productRequest.getStatus());
-        product.setCategory(productRequest.getCategory());
+        Category category = categoryService.getCategoryById(productRequest.getCategoryId())
+        .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+        product.setCategory(category);
+
 
         Product result = productService.createProduct(product);
 

@@ -16,5 +16,5 @@ public class ProductRequest {
     private String description;
     private String fitFor;
     private ProductStatus status;
-    private Category category;
+    private Long categoryId;
 }
