@@ -1,8 +1,8 @@
 package com.uade.tpo.ecommerce.entity.enums;
 
 public enum PayMethod {
-    TRANSFERENCIA,
+    TRANSFER,
     MERCADO_PAGO,
-    CREDITO,
-    DEBITO;
+    CREDIT,
+    DEBIT;
 }

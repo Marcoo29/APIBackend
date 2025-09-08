@@ -1,6 +1,5 @@
 package com.uade.tpo.ecommerce.entity.dto;
 
-import com.uade.tpo.ecommerce.entity.Category;
 import com.uade.tpo.ecommerce.entity.enums.ProductStatus;
 
 

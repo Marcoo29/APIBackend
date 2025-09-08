@@ -12,6 +12,7 @@ public class UserRequest {
     private String username;
     private String name;
     private String lastname;
+    private String email;
     private String address;  
     private Role role; 
     private UserStatus status;

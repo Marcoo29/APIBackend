@@ -3,6 +3,7 @@ package com.uade.tpo.ecommerce.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.uade.tpo.ecommerce.entity.enums.Role;
 import com.uade.tpo.ecommerce.entity.enums.UserStatus;
 
@@ -31,7 +32,10 @@ public class User {
     @Column
     private String lastname;
 
-   @Column
+    @Column
+    private String email;
+
+    @Column
     private String address;  
 
     @Column
@@ -41,6 +45,7 @@ public class User {
     private UserStatus status = UserStatus.ACTIVE; // esta activo por default
 
     @OneToMany(mappedBy = "user") // user es la FK para vincular la tabla User con Order
+    @JsonIgnore
     private List<Operation> operations;
 
 }

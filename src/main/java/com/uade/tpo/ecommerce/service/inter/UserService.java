@@ -1,6 +1,7 @@
 package com.uade.tpo.ecommerce.service.inter;
 
 import com.uade.tpo.ecommerce.entity.User;
+import com.uade.tpo.ecommerce.entity.dto.UserRequest;
 import com.uade.tpo.ecommerce.exceptions.UserDuplicateException;
 
 import java.util.Optional;
@@ -14,9 +15,11 @@ public interface UserService {
 
     public Optional<User> getUserById(Long userId);
 
-    public User createUser(User user) throws UserDuplicateException;
+    public User createUser(UserRequest userRequest) throws UserDuplicateException;
 
     public List<User> getAllUsers();
 
-    public User updateUser(User user);
+    public User deleteUser(Long userId);
+
+    public User updateUser(Long userId, UserRequest userRequest);
 }

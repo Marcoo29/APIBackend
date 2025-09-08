@@ -7,9 +7,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.uade.tpo.ecommerce.entity.Product;
+import com.uade.tpo.ecommerce.entity.dto.ProductRequest;
 import com.uade.tpo.ecommerce.exceptions.ProductDuplicateException;
 
-@Service
 public interface ProductService {
     public Page<Product> getProducts(PageRequest pageRequest);
 
@@ -17,11 +17,11 @@ public interface ProductService {
 
     public int getProductStockById(Long operationId);
 
-    public Product createProduct(Product newProduct) throws ProductDuplicateException;
+    public Product createProduct(ProductRequest productRequest) throws ProductDuplicateException;
 
     public void deleteProduct(Long productId);
 
-    public Product updateProduct(Product product);
+    public Product updateProduct(Long productId, ProductRequest productRequest);
 
 
 

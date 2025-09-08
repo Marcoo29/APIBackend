@@ -1,5 +1,8 @@
 package com.uade.tpo.ecommerce.entity;
  
+
+import com.uade.tpo.ecommerce.entity.enums.PayMethod;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,22 +21,31 @@ public class OperationDetail {
     public OperationDetail() {
  
     }
+
+    public OperationDetail(int quantity, float unitaryPrice, float subtotal, PayMethod payMethod) {
+        this.quantity = quantity;
+        this.unitaryPrice = unitaryPrice;
+        this.subtotal = subtotal;
+    }
  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
    
     @Column
-    public int cantidad;
+    public int quantity;
  
     @Column
-    public float precio_unitario;
+    public float unitaryPrice;
  
     @Column
-    public float subtotal = precio_unitario*cantidad;
+    public float subtotal = unitaryPrice*quantity;
  
     @ManyToOne
     @JoinColumn(name = "operation_id", nullable = false)
     private Operation operation_id;
+
+    @ManyToOne
+    private Product product;
    
 }

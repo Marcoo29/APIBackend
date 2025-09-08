@@ -1,12 +1,10 @@
 package com.uade.tpo.ecommerce.service.inter;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import com.uade.tpo.ecommerce.entity.Operation;
-import com.uade.tpo.ecommerce.entity.enums.OperationStatus;
-import com.uade.tpo.ecommerce.entity.enums.PayMethod;
+import com.uade.tpo.ecommerce.entity.OperationDetail;
+import com.uade.tpo.ecommerce.entity.dto.OperationRequest;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,5 +15,9 @@ public interface OperationService {
 
     public Optional<Operation> getOperationById(Long operationId);
 
-    public Operation createOperation(BigDecimal total, LocalDateTime date, OperationStatus operationStatus, PayMethod payMethod);
+    public Operation createOperation(OperationRequest operationRequest);
+
+    public Operation updateOperation(Long operationId, OperationRequest operationRequest);
+
+    public OperationDetail addProduct(Long operationId, Long productId, int quantity);
 }

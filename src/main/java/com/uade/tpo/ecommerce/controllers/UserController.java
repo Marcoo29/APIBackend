@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.uade.tpo.ecommerce.entity.User;
 import com.uade.tpo.ecommerce.entity.dto.UserRequest;
-import com.uade.tpo.ecommerce.entity.enums.UserStatus;
 import com.uade.tpo.ecommerce.exceptions.UserDuplicateException;
 import com.uade.tpo.ecommerce.service.inter.UserService;
 
@@ -40,15 +39,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<Object> createUser(@RequestBody UserRequest userRequest)
             throws UserDuplicateException {
-        User user = new User();
-        user.setUsername(userRequest.getUsername());
-        user.setName(userRequest.getUsername());
-        user.setLastname(userRequest.getLastname());
-        user.setAddress(userRequest.getAddress());
-        user.setRole(userRequest.getRole());
-
-        User result = userService.createUser(user);
-
+        User result = userService.createUser(userRequest);
         return ResponseEntity.created(URI.create("/users/" + result.getId())).body(result);
     }
 
@@ -61,40 +52,17 @@ public class UserController {
         }
         return ResponseEntity.ok(users);
     }
+
     @PutMapping("/{userId}/update")
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody UserRequest userRequest){
-        Optional<User> userOptional = userService.getUserById(userId);
-
-        if(userOptional.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-
-        User user = userOptional.get();
-        if (userRequest.getUsername() != null) user.setUsername(userRequest.getUsername());
-        if (userRequest.getName() != null) user.setName(userRequest.getName());
-        if (userRequest.getLastname() != null) user.setLastname(userRequest.getLastname());
-        if (userRequest.getAddress() != null) user.setAddress(userRequest.getAddress());
-        if (userRequest.getRole() != null) user.setRole(userRequest.getRole());
-
-        User updatedUser = userService.updateUser(user);
-
+        User updatedUser = userService.updateUser(userId, userRequest);
         return ResponseEntity.ok(updatedUser);
     }
 
-    @PatchMapping("/{userId}/disable")
-    public ResponseEntity<User> disableUser(@PathVariable Long userId){
-        Optional<User> userOptional = userService.getUserById(userId);
-
-        if(userOptional.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-
-        User user = userOptional.get();
-        user.setStatus(UserStatus.INACTIVE);
-
-        User disabledUser = userService.updateUser(user); // reutilizo el metodo updateUser para grabar los cambios
-
-        return ResponseEntity.ok(disabledUser);
+    @PatchMapping("/{userId}/delete")
+    public ResponseEntity<User> deleteUser(@PathVariable Long userId){
+         User deletedUser = userService.deleteUser(userId);
+         return ResponseEntity.ok(deletedUser);
     }
     
 }

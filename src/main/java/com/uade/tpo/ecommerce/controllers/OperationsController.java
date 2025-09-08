@@ -16,7 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uade.tpo.ecommerce.entity.Operation;
+import com.uade.tpo.ecommerce.entity.OperationDetail;
+import com.uade.tpo.ecommerce.entity.User;
+import com.uade.tpo.ecommerce.entity.dto.OperationDetailRequest;
 import com.uade.tpo.ecommerce.entity.dto.OperationRequest;
+import com.uade.tpo.ecommerce.entity.dto.UserRequest;
 import com.uade.tpo.ecommerce.service.inter.OperationService;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -50,14 +54,21 @@ public class OperationsController {
 
     @PostMapping
     public ResponseEntity<Object> createOperation(@RequestBody OperationRequest operationRequest){
-            Operation result = operationService.createOperation(
-                operationRequest.getTotal(),
-                operationRequest.getDate(),
-                operationRequest.getOperationStatus(),
-                operationRequest.getPayMethod()
-                
-                );
+        Operation result = operationService.createOperation(operationRequest);
         return ResponseEntity.created(URI.create("/operations/" + result.getId())).body(result);
+    }
+
+    @PostMapping("/operations/{operationId}/details")
+    public ResponseEntity<OperationDetail> addProductToOperation(@PathVariable Long operationId, @RequestBody OperationDetailRequest operationDetailrequest) {
+    
+        OperationDetail detail = operationService.addProduct(operationId, operationDetailrequest.getProductId(), operationDetailrequest.getQuantity());
+        return ResponseEntity.ok(detail);
+    }
+
+    @PutMapping("/{operationId}/update")
+    public ResponseEntity<Operation> updateOperation(@PathVariable Long operationId, @RequestBody OperationRequest operationRequest){
+        Operation updatedOperation = operationService.updateOperation(operationId, operationRequest);
+        return ResponseEntity.ok(updatedOperation);
     }
 
     @PutMapping

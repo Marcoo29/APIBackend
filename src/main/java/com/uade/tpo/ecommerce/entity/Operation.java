@@ -3,8 +3,9 @@ package com.uade.tpo.ecommerce.entity;
 import com.uade.tpo.ecommerce.entity.enums.OperationStatus;
 import com.uade.tpo.ecommerce.entity.enums.PayMethod;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 @Data
@@ -22,7 +24,7 @@ public class Operation {
     public Operation() {
     }
 
-    public Operation(BigDecimal total, LocalDateTime date, OperationStatus operationStatus, PayMethod payMethod) {
+    public Operation(float total, LocalDateTime date, OperationStatus operationStatus, PayMethod payMethod) {
         this.total = total;
         this.date = date;
         this.operationStatus = operationStatus;
@@ -34,7 +36,7 @@ public class Operation {
     private Long id;
 
     @Column
-    private BigDecimal total;
+    private float total;
 
     @Column
     private LocalDateTime date;
@@ -48,4 +50,7 @@ public class Operation {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "operation_id")
+    private List<OperationDetail> details = new ArrayList<>();
 }
