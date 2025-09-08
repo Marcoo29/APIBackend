@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.uade.tpo.ecommerce.entity.Category;
 import com.uade.tpo.ecommerce.entity.Product;
+import com.uade.tpo.ecommerce.entity.User;
 import com.uade.tpo.ecommerce.entity.dto.ProductRequest;
+import com.uade.tpo.ecommerce.entity.dto.UserRequest;
 import com.uade.tpo.ecommerce.exceptions.ProductDuplicateException;
+import com.uade.tpo.ecommerce.service.inter.CategoryService;
 import com.uade.tpo.ecommerce.service.inter.ProductService;
 
 @RestController
@@ -26,6 +30,8 @@ import com.uade.tpo.ecommerce.service.inter.ProductService;
 public class ProductController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping
     public ResponseEntity<Page<Product>> getProducts(
@@ -75,6 +81,33 @@ public class ProductController {
          return ResponseEntity.created(URI.create("/products/" + result.getId())).body(result);
     }
 
+    @PutMapping("/{productId}/update")
+    public ResponseEntity<Product> updateProduct(@PathVariable Long productId, @RequestBody ProductRequest productRequest){
+        Optional<Product> productOptional = productService.getProductById(productId);
+
+        if(productOptional.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        Product product = productOptional.get();
+        if (productRequest.getName() != null) product.setName(productRequest.getName());
+        if (productRequest.getPrice() != 0) product.setPrice(productRequest.getPrice());
+        if (productRequest.getManufacturer() != null) product.setManufacturer(productRequest.getManufacturer());
+        if (productRequest.getStock() != 0) product.setStock(productRequest.getStock());
+        if (productRequest.getDescription() != null) product.setDescription(productRequest.getDescription());
+        if (productRequest.getFitFor() != null) product.setFitFor(productRequest.getFitFor());
+        if (productRequest.getStatus() != null) product.setProductStatus(productRequest.getStatus());
+        if (productRequest.getCategoryId() != null) {
+            Category category = categoryService.getCategoryById(productRequest.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+            product.setCategory(category);
+        }
+
+
+        Product updatedProduct = productService.updateProduct(product);
+
+        return ResponseEntity.ok(updatedProduct);
+    }
 
     @PutMapping
     public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {

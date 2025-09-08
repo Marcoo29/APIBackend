@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.uade.tpo.ecommerce.entity.Product;
+import com.uade.tpo.ecommerce.entity.User;
 import com.uade.tpo.ecommerce.exceptions.ProductDuplicateException;
 import com.uade.tpo.ecommerce.repository.ProductRepository;
 import com.uade.tpo.ecommerce.service.inter.ProductService;
@@ -44,8 +45,8 @@ public class ProductServiceImpl implements ProductService{
         }
     }
 
-    public void updateProduct(Long productId) {
-        
+    public Product updateProduct(Product product){
+        return productRepository.save(product);
     }
 
 }
