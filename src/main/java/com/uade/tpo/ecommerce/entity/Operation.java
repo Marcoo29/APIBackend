@@ -1,5 +1,6 @@
 package com.uade.tpo.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.uade.tpo.ecommerce.entity.enums.OperationStatus;
 import com.uade.tpo.ecommerce.entity.enums.PayMethod;
 
