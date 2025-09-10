@@ -59,7 +59,7 @@ public class OperationServiceImpl implements OperationService {
         .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
         OperationDetail detail = new OperationDetail();
-        detail.setOperation_id(operation);
+        detail.setOperation(operation);
         detail.setProduct(product);
         detail.setQuantity(quantity);
         detail.setUnitaryPrice(product.getPrice());
@@ -82,13 +82,15 @@ public class OperationServiceImpl implements OperationService {
         return operationRepository.save(operation);
     }
 
-    public void deleteOperation(Long operationId) {
-        Optional<Operation> optionalOperation = operationRepository.findById(operationId);
+    public Operation deleteOperation(Long operationId) {
+         Optional<Operation> optionalOperation = operationRepository.findById(operationId);
         if (optionalOperation.isPresent()) {
             Operation operation = optionalOperation.get();
             operation.setOperationStatus(com.uade.tpo.ecommerce.entity.enums.OperationStatus.CANCELLED);
-            operationRepository.save(operation);
+            return (operationRepository.save(operation));
         }
+ 
+        throw new RuntimeException("Operación no encontrada");
     }
 }
 

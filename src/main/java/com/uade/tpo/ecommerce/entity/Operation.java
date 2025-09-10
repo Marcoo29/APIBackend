@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -51,6 +52,6 @@ public class Operation {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "operation_id")
+    @OneToMany(mappedBy = "operation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OperationDetail> details = new ArrayList<>();
 }

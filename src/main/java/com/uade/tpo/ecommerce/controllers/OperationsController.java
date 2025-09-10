@@ -56,7 +56,7 @@ public class OperationsController {
         return ResponseEntity.created(URI.create("/operations/" + result.getId())).body(result);
     }
 
-    @PostMapping("/operations/{operationId}/details")
+    @PostMapping("/{operationId}/details")
     public ResponseEntity<OperationDetail> addProductToOperation(@PathVariable Long operationId, @RequestBody OperationDetailRequest operationDetailrequest) {
     
         OperationDetail detail = operationService.addProduct(operationId, operationDetailrequest.getProductId(), operationDetailrequest.getQuantity());

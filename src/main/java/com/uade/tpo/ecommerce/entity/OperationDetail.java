@@ -43,7 +43,7 @@ public class OperationDetail {
  
     @ManyToOne
     @JoinColumn(name = "operation_id", nullable = false)
-    private Operation operation_id;
+    private Operation operation;
 
     @ManyToOne
     private Product product;
