@@ -53,5 +53,6 @@ public class Operation {
     private User user;
 
     @OneToMany(mappedBy = "operation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<OperationDetail> details = new ArrayList<>();
 }
