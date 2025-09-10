@@ -20,4 +20,6 @@ public interface OperationService {
     public Operation updateOperation(Long operationId, OperationRequest operationRequest);
 
     public OperationDetail addProduct(Long operationId, Long productId, int quantity);
+
+    public Operation deleteOperation(Long operationId);
 }

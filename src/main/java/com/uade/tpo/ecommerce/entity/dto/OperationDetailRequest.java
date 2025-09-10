@@ -5,8 +5,6 @@ import lombok.Data;
 
 @Data
 public class OperationDetailRequest {
-    private Long operationId;
     private Long productId;
-    private int quantity;
-    
+    private int quantity;   
 }
