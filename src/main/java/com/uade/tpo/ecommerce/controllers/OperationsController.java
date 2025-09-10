@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.uade.tpo.ecommerce.entity.Operation;
 import com.uade.tpo.ecommerce.entity.OperationDetail;
-import com.uade.tpo.ecommerce.entity.User;
 import com.uade.tpo.ecommerce.entity.dto.OperationDetailRequest;
 import com.uade.tpo.ecommerce.entity.dto.OperationRequest;
-import com.uade.tpo.ecommerce.entity.dto.UserRequest;
 import com.uade.tpo.ecommerce.service.inter.OperationService;
 import org.springframework.web.bind.annotation.PutMapping;
 
