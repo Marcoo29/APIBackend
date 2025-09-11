@@ -58,7 +58,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.PUT, "/users/{userId}/update").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/users/{userId}/delete").authenticated()
                                 //IMAGE
-                                .requestMatchers(HttpMethod.GET, "/images").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/images").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/images").hasAuthority("ADMIN")
                                 .anyRequest()
                                 .authenticated())

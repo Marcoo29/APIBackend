@@ -11,6 +11,8 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -43,10 +45,10 @@ public class Operation {
     @Column
     private LocalDateTime date;
 
-    @Column 
+    @Enumerated(EnumType.STRING)
     private OperationStatus operationStatus;
 
-    @Column
+    @Enumerated(EnumType.STRING)
     private PayMethod payMethod;
 
     @ManyToOne
