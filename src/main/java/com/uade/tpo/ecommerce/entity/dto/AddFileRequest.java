@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class AddFileRequest {
+    private Long productId;
     private String name;
     private MultipartFile file;
 }
