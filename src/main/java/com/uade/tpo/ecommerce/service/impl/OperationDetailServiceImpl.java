@@ -6,9 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.uade.tpo.ecommerce.entity.Category;
 import com.uade.tpo.ecommerce.entity.OperationDetail;
-import com.uade.tpo.ecommerce.entity.Product;
 import com.uade.tpo.ecommerce.entity.dto.OperationDetailRequest;
 import com.uade.tpo.ecommerce.repository.OperationDetailRepository;
 import com.uade.tpo.ecommerce.service.inter.OperationDetailService;

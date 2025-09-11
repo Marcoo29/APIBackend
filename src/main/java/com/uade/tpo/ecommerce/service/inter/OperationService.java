@@ -1,6 +1,5 @@
 package com.uade.tpo.ecommerce.service.inter;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.uade.tpo.ecommerce.entity.Operation;
@@ -15,8 +14,6 @@ public interface OperationService {
     public Page<Operation> getOperations(PageRequest pageRequest);
 
     public Optional<Operation> getOperationById(Long operationId);
-
-
 
     public Operation createOperation(OperationRequest operationRequest);
 

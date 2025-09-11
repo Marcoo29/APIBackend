@@ -1,7 +1,6 @@
 package com.uade.tpo.ecommerce.controllers;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import com.uade.tpo.ecommerce.entity.Operation;
 import com.uade.tpo.ecommerce.entity.OperationDetail;
 import com.uade.tpo.ecommerce.entity.dto.OperationDetailRequest;
 import com.uade.tpo.ecommerce.entity.dto.OperationRequest;
-import com.uade.tpo.ecommerce.service.inter.OperationDetailService;
 import com.uade.tpo.ecommerce.service.inter.OperationService;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -34,9 +32,6 @@ public class OperationsController {
 
     @Autowired
     private OperationService operationService;
-
-    @Autowired
-    private OperationDetailService operationDetailService;
 
     @GetMapping
     public ResponseEntity<Page<Operation>> getOperations(
