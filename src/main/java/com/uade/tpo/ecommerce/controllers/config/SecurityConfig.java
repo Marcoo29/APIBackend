@@ -2,6 +2,7 @@ package com.uade.tpo.ecommerce.controllers.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -30,9 +31,37 @@ public class SecurityConfig {
                         .authorizeHttpRequests(req -> req
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("/error/**").permitAll()
-                                //categories
-                                .requestMatchers("/categories/**").hasAnyAuthority(Role.ADMIN.name())
-                                .requestMatchers("/operations/**").permitAll()
+                                //CATEGORY
+                                .requestMatchers(HttpMethod.GET, "/categories").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/categories/{categoryId}").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/categories").permitAll()
+                                //OPERATION
+                                .requestMatchers(HttpMethod.GET, "/operations").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/operations/{operationId}").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/operations").hasRole("USER")
+                                .requestMatchers(HttpMethod.POST, "/operations/{operationId}/details").hasRole("USER")
+                                .requestMatchers(HttpMethod.PUT, "/operations/{operationId}/update").authenticated()
+                                .requestMatchers(HttpMethod.DELETE, "/operations").authenticated()
+                                //OPERATIONDETAIl
+                                .requestMatchers(HttpMethod.GET, "/operationDetail/{operationDetailId}").authenticated()
+                                .requestMatchers(HttpMethod.DELETE, "/operationDetail/{operationDetailId}").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/operationDetail/operationDetail").hasRole("ADMIN")
+                                //PRODUCT
+                                .requestMatchers(HttpMethod.GET, "/products").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/products/{productId}").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/products/stock/{productId}").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/products/{productId}/update").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/products").hasRole("ADMIN")
+                                //USER
+                                .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/users/{userId}").hasRole("USER")
+                                .requestMatchers(HttpMethod.POST, "/users").denyAll()
+                                .requestMatchers(HttpMethod.PUT, "/users/{userId}/update").authenticated()
+                                .requestMatchers(HttpMethod.PATCH, "/users/{userId}/delete").authenticated()
+                                //IMAGE
+                                .requestMatchers(HttpMethod.GET, "/images").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/images").hasRole("ADMIN")
                                 .anyRequest()
                                 .authenticated())
                                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
