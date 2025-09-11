@@ -52,7 +52,7 @@ public class ProductController {
     if (result.isPresent()) {
         return ResponseEntity.ok(result.get().getStock());
     }
-    return ResponseEntity.notFound().build(); // 
+    return ResponseEntity.notFound().build(); 
 }
 
     @PostMapping
@@ -74,6 +74,6 @@ public class ProductController {
         if (result.isPresent()) {
             productService.deleteProduct(productId);
         }
-        return ResponseEntity.notFound().build(); // 
+        return ResponseEntity.notFound().build();
     }
 }
