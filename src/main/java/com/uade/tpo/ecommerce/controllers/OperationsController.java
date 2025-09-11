@@ -1,12 +1,14 @@
 package com.uade.tpo.ecommerce.controllers;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,7 @@ import com.uade.tpo.ecommerce.entity.Operation;
 import com.uade.tpo.ecommerce.entity.OperationDetail;
 import com.uade.tpo.ecommerce.entity.dto.OperationDetailRequest;
 import com.uade.tpo.ecommerce.entity.dto.OperationRequest;
+import com.uade.tpo.ecommerce.service.inter.OperationDetailService;
 import com.uade.tpo.ecommerce.service.inter.OperationService;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -31,6 +34,9 @@ public class OperationsController {
 
     @Autowired
     private OperationService operationService;
+
+    @Autowired
+    private OperationDetailService operationDetailService;
 
     @GetMapping
     public ResponseEntity<Page<Operation>> getOperations(
@@ -49,6 +55,8 @@ public class OperationsController {
 
         return ResponseEntity.noContent().build();
     }
+
+   
 
     @PostMapping
     public ResponseEntity<Object> createOperation(@RequestBody OperationRequest operationRequest){
@@ -69,7 +77,7 @@ public class OperationsController {
         return ResponseEntity.ok(updatedOperation);
     }
 
-    @PutMapping
+    @DeleteMapping("/{operationId}/delete")
     public Void deleteOperation(@PathVariable Long operationId) {
         operationService.deleteOperation(operationId);
         return null;

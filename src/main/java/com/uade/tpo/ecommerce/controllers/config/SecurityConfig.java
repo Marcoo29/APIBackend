@@ -34,7 +34,7 @@ public class SecurityConfig {
                                 //CATEGORY
                                 .requestMatchers(HttpMethod.GET, "/categories").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/categories/{categoryId}").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/categories").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/categories").hasAuthority("ADMIN")
                                 //OPERATION
                                 .requestMatchers(HttpMethod.GET, "/operations").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/operations/{operationId}").authenticated()
@@ -55,7 +55,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.DELETE, "/products").hasAuthority("ADMIN")
                                 //USER
                                 .requestMatchers(HttpMethod.GET, "/users").hasAuthority("ADMIN")
-                                .requestMatchers(HttpMethod.GET, "/users/{userId}").hasAuthority("USER")
+                                .requestMatchers(HttpMethod.GET, "/users/{userId}").authenticated()
                                 .requestMatchers(HttpMethod.POST, "/users").denyAll()
                                 .requestMatchers(HttpMethod.PUT, "/users/{userId}/update").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/users/{userId}/delete").authenticated()

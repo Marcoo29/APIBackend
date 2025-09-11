@@ -1,5 +1,6 @@
 package com.uade.tpo.ecommerce.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class OperationServiceImpl implements OperationService {
     public Optional<Operation> getOperationById(Long operationId) {
         return operationRepository.findById(operationId);
     }
+
 
     public Operation createOperation(OperationRequest operationRequest) {
         User user = userService.getUserById(operationRequest.getUserId())
