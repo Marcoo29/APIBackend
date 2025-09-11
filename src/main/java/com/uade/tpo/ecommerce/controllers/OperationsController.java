@@ -71,6 +71,7 @@ public class OperationsController {
 
     @PutMapping
     public Void deleteOperation(@PathVariable Long operationId) {
+        operationService.deleteOperation(operationId);
         return null;
     }
 
