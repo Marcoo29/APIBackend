@@ -29,7 +29,7 @@ public class AuthenticationService {
                                 .name(request.getName())
                                 .lastname(request.getLastname())
                                 .email(request.getEmail())
-                                .address(request.getAdress())
+                                .address(request.getAddress())
                                 .role(request.getRole())
                                 .build();
 
