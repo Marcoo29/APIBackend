@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 public interface UserService {
+    
     public Page<User> getUsers(PageRequest pageRequest);
 
     public Optional<User> getUserById(Long userId);

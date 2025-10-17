@@ -15,7 +15,8 @@ import com.uade.tpo.ecommerce.entity.dto.UserRequest;
 import com.uade.tpo.ecommerce.exceptions.UserDuplicateException;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserRepository userRepository;
 
@@ -27,12 +28,20 @@ public class UserServiceImpl implements UserService{
         return userRepository.findById(userId);
     }
 
-   
     public User createUser(UserRequest userRequest) throws UserDuplicateException {
+
+        if (userRepository.existsByUsername(userRequest.getUsername())) {
+            throw new UserDuplicateException("El nombre de usuario ya está en uso");
+        }
+
+        // Verificar si ya existe un usuario con el mismo email
+        if (userRepository.existsByEmail(userRequest.getEmail())) {
+            throw new UserDuplicateException("El correo ya está registrado");
+        }
 
         User user = new User();
         user.setUsername(userRequest.getUsername());
-        user.setName(userRequest.getName());    
+        user.setName(userRequest.getName());
         user.setLastname(userRequest.getLastname());
         user.setEmail(userRequest.getEmail());
         user.setAddress(userRequest.getAddress());
@@ -41,25 +50,35 @@ public class UserServiceImpl implements UserService{
         return userRepository.save(user);
     }
 
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public User updateUser(Long userId, UserRequest userRequest){
+    public User updateUser(Long userId, UserRequest userRequest) {
         User user = userRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        if (userRequest.getUsername() != null) user.setUsername(userRequest.getUsername());
-        if (userRequest.getName() != null) user.setName(userRequest.getName());
-        if (userRequest.getLastname() != null) user.setLastname(userRequest.getLastname());
-        if (userRequest.getAddress() != null) user.setAddress(userRequest.getAddress());
-        if (userRequest.getRole() != null) user.setRole(userRequest.getRole());
+        if (userRequest.getUsername() != null) {
+            user.setUsername(userRequest.getUsername());
+        }
+        if (userRequest.getName() != null) {
+            user.setName(userRequest.getName());
+        }
+        if (userRequest.getLastname() != null) {
+            user.setLastname(userRequest.getLastname());
+        }
+        if (userRequest.getAddress() != null) {
+            user.setAddress(userRequest.getAddress());
+        }
+        if (userRequest.getRole() != null) {
+            user.setRole(userRequest.getRole());
+        }
 
         return userRepository.save(user);
     }
 
     public User deleteUser(Long userId) {
-         Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setStatus(com.uade.tpo.ecommerce.entity.enums.UserStatus.INACTIVE);
