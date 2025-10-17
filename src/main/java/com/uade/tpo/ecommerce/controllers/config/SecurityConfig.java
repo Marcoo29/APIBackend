@@ -52,7 +52,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.PUT, "/products/{productId}/update").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/products").hasAuthority("ADMIN")
                                 //USER
-                                .requestMatchers(HttpMethod.GET, "/users").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/users").permitAll() //hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/users/{userId}").authenticated()
                                 .requestMatchers(HttpMethod.POST, "/users").denyAll()
                                 .requestMatchers(HttpMethod.PUT, "/users/{userId}/update").authenticated()
