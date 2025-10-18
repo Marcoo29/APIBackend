@@ -3,6 +3,7 @@ package com.uade.tpo.ecommerce.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.uade.tpo.ecommerce.entity.enums.ProductStatus;
 
 import jakarta.persistence.CascadeType;
@@ -52,5 +53,6 @@ public class Product {
     private Category category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Image> images = new ArrayList<>();
 }

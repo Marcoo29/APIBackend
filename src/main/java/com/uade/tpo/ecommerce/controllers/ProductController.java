@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.uade.tpo.ecommerce.entity.Product;
 import com.uade.tpo.ecommerce.entity.dto.ProductRequest;
 import com.uade.tpo.ecommerce.exceptions.ProductDuplicateException;
+import com.uade.tpo.ecommerce.repository.ProductRepository;
 import com.uade.tpo.ecommerce.service.inter.ProductService;
 
 @RestController
@@ -29,15 +30,15 @@ import com.uade.tpo.ecommerce.service.inter.ProductService;
 public class ProductController {
     @Autowired
     private ProductService productService;
-    
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @GetMapping
-    public ResponseEntity<Page<Product>> getProducts(
-            @RequestParam(required = false) Integer page,
-            @RequestParam(required = false) Integer size) {
-        if (page == null || size == null)
-            return ResponseEntity.ok(productService.getProducts(PageRequest.of(0, Integer.MAX_VALUE)));
-        return ResponseEntity.ok(productService.getProducts(PageRequest.of(page, size)));
+    public Page<Product> getProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int size) {
+        return productRepository.findAll(PageRequest.of(page, size));
     }
 
     @GetMapping("/{productId}")
@@ -51,22 +52,23 @@ public class ProductController {
 
     @GetMapping("/stock/{productId}")
     public ResponseEntity<Integer> getProductStockById(@PathVariable Long productId) {
-    Optional<Product> result = productService.getProductById(productId);
-    if (result.isPresent()) {
-        return ResponseEntity.ok(result.get().getStock());
+        Optional<Product> result = productService.getProductById(productId);
+        if (result.isPresent()) {
+            return ResponseEntity.ok(result.get().getStock());
+        }
+        return ResponseEntity.notFound().build();
     }
-    return ResponseEntity.notFound().build(); 
-}
 
     @PostMapping
     public ResponseEntity<Object> createProduct(@RequestBody ProductRequest productRequest)
-        throws ProductDuplicateException {
+            throws ProductDuplicateException {
         Product result = productService.createProduct(productRequest);
         return ResponseEntity.created(URI.create("/products/" + result.getId())).body(result);
     }
 
     @PutMapping("/{productId}/update")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long productId, @RequestBody ProductRequest productRequest){
+    public ResponseEntity<Product> updateProduct(@PathVariable Long productId,
+            @RequestBody ProductRequest productRequest) {
         Product updatedProduct = productService.updateProduct(productId, productRequest);
         return ResponseEntity.ok(updatedProduct);
     }
