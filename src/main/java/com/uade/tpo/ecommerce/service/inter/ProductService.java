@@ -10,7 +10,8 @@ import com.uade.tpo.ecommerce.entity.dto.ProductRequest;
 import com.uade.tpo.ecommerce.exceptions.ProductDuplicateException;
 
 public interface ProductService {
-    public Page<Product> getProducts(PageRequest pageRequest);
+    
+    Page<Product> getProducts(int page, int size, String sortOption);
 
     public Optional<Product> getProductById(Long operationId);
 

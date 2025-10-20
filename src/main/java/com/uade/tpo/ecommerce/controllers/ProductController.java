@@ -37,8 +37,10 @@ public class ProductController {
     @GetMapping
     public Page<Product> getProducts(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "12") int size) {
-        return productRepository.findAll(PageRequest.of(page, size));
+            @RequestParam(defaultValue = "12") int size,
+            @RequestParam(defaultValue = "name-asc") String sort) {
+
+        return productService.getProducts(page, size, sort);
     }
 
     @GetMapping("/{productId}")

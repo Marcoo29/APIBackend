@@ -1,9 +1,11 @@
 package com.uade.tpo.ecommerce.service.impl;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.uade.tpo.ecommerce.entity.Category;
@@ -15,14 +17,35 @@ import com.uade.tpo.ecommerce.service.inter.CategoryService;
 import com.uade.tpo.ecommerce.service.inter.ProductService;
 
 @Service
-public class ProductServiceImpl implements ProductService{
-     @Autowired
+public class ProductServiceImpl implements ProductService {
+    @Autowired
     private ProductRepository productRepository;
 
     @Autowired
     private CategoryService categoryService;
 
-    public Page<Product> getProducts(PageRequest pageable) {
+    // En ProductServiceImpl
+    @Override
+    public Page<Product> getProducts(int page, int size, String sortOption) {
+        Sort sort;
+        switch (sortOption) {
+            case "name-asc":
+                sort = Sort.by("name").ascending();
+                break;
+            case "name-desc":
+                sort = Sort.by("name").descending();
+                break;
+            case "price-asc":
+                sort = Sort.by("price").ascending();
+                break;
+            case "price-desc":
+                sort = Sort.by("price").descending();
+                break;
+            default:
+                sort = Sort.by("id").ascending();
+        }
+
+        PageRequest pageable = PageRequest.of(page, size, sort);
         return productRepository.findAll(pageable);
     }
 
@@ -63,17 +86,24 @@ public class ProductServiceImpl implements ProductService{
         }
     }
 
-    public Product updateProduct(Long productId, ProductRequest productRequest){
+    public Product updateProduct(Long productId, ProductRequest productRequest) {
         Product product = productRepository.findById(productId)
-            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
-        if (productRequest.getName() != null) product.setName(productRequest.getName());
-        if (productRequest.getPrice() != 0) product.setPrice(productRequest.getPrice());
-        if (productRequest.getManufacturer() != null) product.setManufacturer(productRequest.getManufacturer());
-        if (productRequest.getStock() != 0) product.setStock(productRequest.getStock());
-        if (productRequest.getDescription() != null) product.setDescription(productRequest.getDescription());
-        if (productRequest.getFitFor() != null) product.setFitFor(productRequest.getFitFor());
-        if (productRequest.getStatus() != null) product.setProductStatus(productRequest.getStatus());
+        if (productRequest.getName() != null)
+            product.setName(productRequest.getName());
+        if (productRequest.getPrice() != 0)
+            product.setPrice(productRequest.getPrice());
+        if (productRequest.getManufacturer() != null)
+            product.setManufacturer(productRequest.getManufacturer());
+        if (productRequest.getStock() != 0)
+            product.setStock(productRequest.getStock());
+        if (productRequest.getDescription() != null)
+            product.setDescription(productRequest.getDescription());
+        if (productRequest.getFitFor() != null)
+            product.setFitFor(productRequest.getFitFor());
+        if (productRequest.getStatus() != null)
+            product.setProductStatus(productRequest.getStatus());
 
         if (productRequest.getCategoryId() != null) {
             Category category = categoryService.getCategoryById(productRequest.getCategoryId())
