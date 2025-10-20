@@ -1,86 +1,52 @@
 package com.uade.tpo.ecommerce.controllers;
 
-import java.net.URI;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.uade.tpo.ecommerce.entity.Product;
 import com.uade.tpo.ecommerce.entity.dto.ProductRequest;
 import com.uade.tpo.ecommerce.exceptions.ProductDuplicateException;
-import com.uade.tpo.ecommerce.repository.ProductRepository;
 import com.uade.tpo.ecommerce.service.inter.ProductService;
 
 @RestController
 @RequestMapping("products")
 @CrossOrigin(origins = "http://localhost:5173")
 public class ProductController {
-    @Autowired
-    private ProductService productService;
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @GetMapping
     public Page<Product> getProducts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "12") int size,
-            @RequestParam(defaultValue = "name-asc") String sort) {
+            @RequestParam(defaultValue = "name-asc") String sort,
+            @RequestParam(required = false) String searchTerm) {
 
-        return productService.getProducts(page, size, sort);
+        return productService.getProducts(page, size, sort, searchTerm);
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long productId) {
-        Optional<Product> result = productService.getProductById(productId);
-        if (result.isPresent())
-            return ResponseEntity.ok(result.get());
-
-        return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/stock/{productId}")
-    public ResponseEntity<Integer> getProductStockById(@PathVariable Long productId) {
-        Optional<Product> result = productService.getProductById(productId);
-        if (result.isPresent()) {
-            return ResponseEntity.ok(result.get().getStock());
-        }
-        return ResponseEntity.notFound().build();
+    public Product getProductById(@PathVariable Long productId) {
+        return productService.getProductById(productId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
     }
 
     @PostMapping
-    public ResponseEntity<Object> createProduct(@RequestBody ProductRequest productRequest)
-            throws ProductDuplicateException {
-        Product result = productService.createProduct(productRequest);
-        return ResponseEntity.created(URI.create("/products/" + result.getId())).body(result);
+    public Product createProduct(@RequestBody ProductRequest productRequest) throws ProductDuplicateException {
+        return productService.createProduct(productRequest);
     }
 
     @PutMapping("/{productId}/update")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long productId,
-            @RequestBody ProductRequest productRequest) {
-        Product updatedProduct = productService.updateProduct(productId, productRequest);
-        return ResponseEntity.ok(updatedProduct);
+    public Product updateProduct(@PathVariable Long productId, @RequestBody ProductRequest productRequest) {
+        return productService.updateProduct(productId, productRequest);
     }
 
     @DeleteMapping("/{productId}/delete")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
-        Optional<Product> result = productService.getProductById(productId);
-        if (result.isPresent()) {
-            productService.deleteProduct(productId);
-        }
-        return ResponseEntity.notFound().build();
+    public void deleteProduct(@PathVariable Long productId) {
+        productService.deleteProduct(productId);
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.uade.tpo.ecommerce.entity.Category;
 import com.uade.tpo.ecommerce.entity.Product;
 import com.uade.tpo.ecommerce.entity.dto.ProductRequest;
+import com.uade.tpo.ecommerce.entity.enums.ProductStatus;
 import com.uade.tpo.ecommerce.exceptions.ProductDuplicateException;
 import com.uade.tpo.ecommerce.repository.ProductRepository;
 import com.uade.tpo.ecommerce.service.inter.CategoryService;
@@ -18,16 +19,17 @@ import com.uade.tpo.ecommerce.service.inter.ProductService;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
     @Autowired
     private ProductRepository productRepository;
 
     @Autowired
     private CategoryService categoryService;
 
-    // En ProductServiceImpl
     @Override
-    public Page<Product> getProducts(int page, int size, String sortOption) {
+    public Page<Product> getProducts(int page, int size, String sortOption, String searchTerm) {
         Sort sort;
+
         switch (sortOption) {
             case "name-asc":
                 sort = Sort.by("name").ascending();
@@ -46,19 +48,23 @@ public class ProductServiceImpl implements ProductService {
         }
 
         PageRequest pageable = PageRequest.of(page, size, sort);
-        return productRepository.findAll(pageable);
+
+        String query = (searchTerm == null) ? "" : searchTerm;
+        return productRepository.searchProducts(ProductStatus.AVAILABLE, query, pageable);
     }
 
+    @Override
     public Optional<Product> getProductById(Long productId) {
         return productRepository.findById(productId);
     }
 
+    @Override
     public int getProductStockById(Long productId) {
         return productRepository.findStockById(productId);
     }
 
+    @Override
     public Product createProduct(ProductRequest productRequest) throws ProductDuplicateException {
-
         Product product = new Product();
         product.setName(productRequest.getName());
         product.setPrice(productRequest.getPrice());
@@ -77,15 +83,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(product);
     }
 
-    public void deleteProduct(Long productId) {
-        Optional<Product> optionalProduct = productRepository.findById(productId);
-        if (optionalProduct.isPresent()) {
-            Product product = optionalProduct.get();
-            product.setProductStatus(com.uade.tpo.ecommerce.entity.enums.ProductStatus.NOT_AVAILABLE);
-            productRepository.save(product);
-        }
-    }
-
+    @Override
     public Product updateProduct(Long productId, ProductRequest productRequest) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
@@ -114,4 +112,13 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(product);
     }
 
+    @Override
+    public void deleteProduct(Long productId) {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            product.setProductStatus(com.uade.tpo.ecommerce.entity.enums.ProductStatus.NOT_AVAILABLE);
+            productRepository.save(product);
+        }
+    }
 }

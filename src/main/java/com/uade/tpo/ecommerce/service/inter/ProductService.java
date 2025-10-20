@@ -10,19 +10,15 @@ import com.uade.tpo.ecommerce.entity.dto.ProductRequest;
 import com.uade.tpo.ecommerce.exceptions.ProductDuplicateException;
 
 public interface ProductService {
-    
-    Page<Product> getProducts(int page, int size, String sortOption);
+    Page<Product> getProducts(int page, int size, String sortOption, String searchTerm);
 
-    public Optional<Product> getProductById(Long operationId);
+    Optional<Product> getProductById(Long productId);
 
-    public int getProductStockById(Long operationId);
+    int getProductStockById(Long productId);
 
-    public Product createProduct(ProductRequest productRequest) throws ProductDuplicateException;
+    Product createProduct(ProductRequest productRequest) throws ProductDuplicateException;
 
-    public void deleteProduct(Long productId);
+    Product updateProduct(Long productId, ProductRequest productRequest);
 
-    public Product updateProduct(Long productId, ProductRequest productRequest);
-
-
-
+    void deleteProduct(Long productId);
 }
