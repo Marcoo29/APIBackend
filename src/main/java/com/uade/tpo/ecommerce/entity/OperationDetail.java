@@ -39,7 +39,7 @@ public class OperationDetail {
     public float unitaryPrice;
  
     @Column
-    public float subtotal = unitaryPrice*quantity;
+    public float subtotal;
  
     @ManyToOne
     @JoinColumn(name = "operation_id", nullable = false)

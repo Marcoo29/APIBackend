@@ -66,11 +66,11 @@ public class OperationsController {
         return ResponseEntity.ok(detail);
     }
 
-    @PutMapping("/{operationId}/update")
-    public ResponseEntity<Operation> updateOperation(@PathVariable Long operationId, @RequestBody OperationRequest operationRequest){
-        Operation updatedOperation = operationService.updateOperation(operationId, operationRequest);
-        return ResponseEntity.ok(updatedOperation);
-    }
+    // @PutMapping("/{operationId}/update")
+    // public ResponseEntity<Operation> updateOperation(@PathVariable Long operationId, @RequestBody OperationRequest operationRequest){
+    //     Operation updatedOperation = operationService.updateOperation(operationId, operationRequest);
+    //     return ResponseEntity.ok(updatedOperation);
+    // }
 
     @DeleteMapping("/{operationId}/delete")
     public Void deleteOperation(@PathVariable Long operationId) {
