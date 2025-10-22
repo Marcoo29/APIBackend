@@ -1,5 +1,6 @@
 package com.uade.tpo.ecommerce.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,30 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<Product> getProductById(Long productId) {
         return productRepository.findById(productId);
+    }
+
+    public Page<Product> getProductsByCategory(Long categoryId, int page, int size, String sortOption) {
+        Sort sort;
+        switch (sortOption) {
+            case "name-asc":
+                sort = Sort.by("name").ascending();
+                break;
+            case "name-desc":
+                sort = Sort.by("name").descending();
+                break;
+            case "price-asc":
+                sort = Sort.by("price").ascending();
+                break;
+            case "price-desc":
+                sort = Sort.by("price").descending();
+                break;
+            default:
+                sort = Sort.by("id").ascending();
+        }
+
+        PageRequest pageable = PageRequest.of(page, size, sort);
+
+        return productRepository.findByCategoryId(categoryId, pageable);
     }
 
     @Override

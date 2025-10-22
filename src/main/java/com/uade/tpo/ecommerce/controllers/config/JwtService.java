@@ -28,11 +28,19 @@ public class JwtService {
     private String buildToken(
             UserDetails userDetails,
             long expiration) {
+                
+                //obtener rol
+            String role = userDetails.getAuthorities().stream()
+            .findFirst()
+            .map(auth -> auth.getAuthority())
+            .orElse("USER"); // valor por defecto
+
         return Jwts
                 .builder()
                 .subject(userDetails.getUsername()) // prueba@hotmail.com
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .claim("Gisele", 1234567)
+                .claim("role", role)
                 .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSecretKey())
                 .compact();

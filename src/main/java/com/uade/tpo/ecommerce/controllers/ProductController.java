@@ -1,5 +1,6 @@
 package com.uade.tpo.ecommerce.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,15 @@ public class ProductController {
     public Product getProductById(@PathVariable Long productId) {
         return productService.getProductById(productId)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+    }
+
+    @GetMapping("/by-category/{id}")
+    public Page<Product> getProductsByCategory(
+            @PathVariable("id") Long categoryId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int size,
+            @RequestParam(defaultValue = "name-asc") String sort) {
+        return productService.getProductsByCategory(categoryId, page, size, sort);
     }
 
     @PostMapping

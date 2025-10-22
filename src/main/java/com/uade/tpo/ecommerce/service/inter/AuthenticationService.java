@@ -24,12 +24,12 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+    // Registro de usuario
     public AuthenticationResponse register(RegisterRequest request) {
         if (repository.existsByUsername(request.getUsername())) {
             throw new UserDuplicateException("ERROR. El nombre de usuario ya existe");
         }
 
-        // Verificar si ya existe el email
         if (repository.existsByEmail(request.getEmail())) {
             throw new UserDuplicateException("ERROR. El correo electrónico ya está registrado");
         }
@@ -41,28 +41,39 @@ public class AuthenticationService {
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .address(request.getAddress())
-                .role(request.getRole())
+                .role(request.getRole()) // asegurarse de recibir rol al registrar
                 .build();
 
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
+
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
+                .name(user.getName())
+                .role(user.getRole()) // incluir rol
                 .build();
     }
 
+    // Autenticación de usuario
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        // 1️⃣ Autenticar con Spring Security
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
                         request.getPassword()));
 
+        // 2️⃣ Traer el usuario
         var user = repository.findByEmail(request.getEmail())
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // 3️⃣ Generar token JWT
         var jwtToken = jwtService.generateToken(user);
+
+        // 4️⃣ Devolver respuesta con rol
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .name(user.getName())
+                .role(user.getRole()) 
                 .build();
     }
 }

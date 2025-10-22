@@ -1,5 +1,6 @@
 package com.uade.tpo.ecommerce.service.inter;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -12,6 +13,8 @@ public interface ProductService {
     Page<Product> getProducts(int page, int size, String sortOption, String searchTerm);
 
     Optional<Product> getProductById(Long productId);
+
+    Page<Product> getProductsByCategory(Long categoryId, int page, int size, String sortOption);
 
     int getProductStockById(Long productId);
 
