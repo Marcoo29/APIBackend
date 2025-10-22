@@ -1,5 +1,7 @@
 package com.uade.tpo.ecommerce.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image viewById(long id) {
-        return imageRepository.findById(id).get();
+    public Image viewByProductId(long id) {
+        return imageRepository.findByProduct_Id(id);
     }
 }

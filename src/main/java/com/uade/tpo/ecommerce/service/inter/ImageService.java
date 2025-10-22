@@ -8,5 +8,5 @@ import com.uade.tpo.ecommerce.entity.Image;
 public interface ImageService {
     public Image create(Image image);
 
-    public Image viewById(long id);
+    public Image viewByProductId(long id);
 }

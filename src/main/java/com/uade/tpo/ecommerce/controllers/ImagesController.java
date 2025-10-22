@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 import javax.sql.rowset.serial.SerialException;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,7 @@ public class ImagesController {
     @CrossOrigin
     @GetMapping() // Obtener imagen por id
     public ResponseEntity<ImageResponse> displayImage(@RequestParam("id") Long id) throws IOException, SQLException {
-        Image image = imageService.viewById(id);
+        Image image = imageService.viewByProductId(id);
         String encodedString = Base64.getEncoder()
                 .encodeToString(image.getImage().getBytes(1, (int) image.getImage().length()));
         ImageResponse response = ImageResponse.builder()
