@@ -97,7 +97,7 @@ public class ProductServiceImpl implements ProductService {
         product.setStock(productRequest.getStock());
         product.setDescription(productRequest.getDescription());
         product.setFitFor(productRequest.getFitFor());
-        product.setProductStatus(productRequest.getStatus());
+        product.setProductStatus(productRequest.getProductStatus());
 
         if (productRequest.getCategoryId() != null) {
             Category category = categoryService.getCategoryById(productRequest.getCategoryId())
@@ -125,8 +125,8 @@ public class ProductServiceImpl implements ProductService {
             product.setDescription(productRequest.getDescription());
         if (productRequest.getFitFor() != null)
             product.setFitFor(productRequest.getFitFor());
-        if (productRequest.getStatus() != null)
-            product.setProductStatus(productRequest.getStatus());
+        if (productRequest.getProductStatus() != null)
+            product.setProductStatus(productRequest.getProductStatus());
 
         if (productRequest.getCategoryId() != null) {
             Category category = categoryService.getCategoryById(productRequest.getCategoryId())
@@ -146,4 +146,10 @@ public class ProductServiceImpl implements ProductService {
             productRepository.save(product);
         }
     }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
 }

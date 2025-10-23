@@ -27,10 +27,28 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findById(categoryId);
     }
 
-    public Category createCategory(String description) throws CategoryDuplicateException {
+    public Category createCategory(String description) {
         List<Category> categories = categoryRepository.findByDescription(description);
         if (categories.isEmpty())
             return categoryRepository.save(new Category(description));
         throw new CategoryDuplicateException();
     }
+
+    public Category updateCategory(Long id, String newDescription) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+
+        List<Category> duplicates = categoryRepository.findByDescription(newDescription);
+        boolean existsDuplicate = duplicates.stream()
+                .anyMatch(c -> !c.getId().equals(id));
+
+        if (existsDuplicate) {
+            throw new CategoryDuplicateException();
+        }
+
+        category.setDescription(newDescription);
+        return categoryRepository.save(category);
+    }
+
+
 }

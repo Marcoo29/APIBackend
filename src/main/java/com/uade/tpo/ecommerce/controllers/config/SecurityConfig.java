@@ -64,6 +64,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/products/by-category/{categoryId}").permitAll()
                 .requestMatchers(HttpMethod.POST, "/products").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/products/{productId}/update").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/products/all").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/products").hasAuthority("ADMIN")
 
                 // USER

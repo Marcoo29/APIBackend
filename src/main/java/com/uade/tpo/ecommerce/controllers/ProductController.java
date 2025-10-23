@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.uade.tpo.ecommerce.entity.Product;
@@ -58,5 +59,12 @@ public class ProductController {
     @DeleteMapping("/{productId}/delete")
     public void deleteProduct(@PathVariable Long productId) {
         productService.deleteProduct(productId);
+    }
+
+    @GetMapping("/all")
+    public List<Product> getAllProducts() {
+        List<Product> all = productService.getAllProducts();
+        System.out.println("🔍 Total productos: " + all.size());
+        return all;
     }
 }
