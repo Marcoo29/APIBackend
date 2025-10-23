@@ -28,6 +28,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(userId);
     }
 
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
     public User createUser(UserRequest userRequest) throws UserDuplicateException {
 
         if (userRepository.existsByUsername(userRequest.getUsername())) {

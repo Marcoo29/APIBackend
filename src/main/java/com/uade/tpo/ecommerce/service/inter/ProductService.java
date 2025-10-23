@@ -14,7 +14,7 @@ public interface ProductService {
 
     Optional<Product> getProductById(Long productId);
 
-    Page<Product> getProductsByCategory(Long categoryId, int page, int size, String sortOption);
+    Page<Product> getProductsByCategory(Long categoryId, int page, int size, String sortOption, String searchTerm);
 
     int getProductStockById(Long productId);
 

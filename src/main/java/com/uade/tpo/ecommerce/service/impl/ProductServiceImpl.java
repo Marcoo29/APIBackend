@@ -59,7 +59,9 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(productId);
     }
 
-    public Page<Product> getProductsByCategory(Long categoryId, int page, int size, String sortOption) {
+    @Override
+    public Page<Product> getProductsByCategory(Long categoryId, int page, int size, String sortOption,
+            String searchTerm) {
         Sort sort;
         switch (sortOption) {
             case "name-asc":
@@ -80,7 +82,11 @@ public class ProductServiceImpl implements ProductService {
 
         PageRequest pageable = PageRequest.of(page, size, sort);
 
-        return productRepository.findByCategoryId(categoryId, pageable);
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            return productRepository.findByCategoryIdAndNameContainingIgnoreCase(categoryId, searchTerm, pageable);
+        } else {
+            return productRepository.findByCategoryId(categoryId, pageable);
+        }
     }
 
     @Override

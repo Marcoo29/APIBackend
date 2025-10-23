@@ -16,6 +16,8 @@ public interface UserService {
 
     public Optional<User> getUserById(Long userId);
 
+    public Optional<User> getUserByEmail(String email);
+
     public User createUser(UserRequest userRequest) throws UserDuplicateException;
 
     public List<User> getAllUsers();

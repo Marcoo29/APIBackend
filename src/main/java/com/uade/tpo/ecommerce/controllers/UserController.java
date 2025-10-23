@@ -23,13 +23,22 @@ import com.uade.tpo.ecommerce.service.inter.UserService;
 @RestController
 @RequestMapping("users")
 public class UserController {
-    
+
     @Autowired
     private UserService userService;
 
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {
         Optional<User> result = userService.getUserById(userId);
+        if (result.isPresent())
+            return ResponseEntity.ok(result.get());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/by-email/{email}")
+    public ResponseEntity<User> getUserByUsername(@PathVariable String email) {
+        Optional<User> result = userService.getUserByEmail(email);
         if (result.isPresent())
             return ResponseEntity.ok(result.get());
 
@@ -47,22 +56,22 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
 
-        if (users.isEmpty()){
+        if (users.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(users);
     }
 
     @PutMapping("/{userId}/update")
-    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody UserRequest userRequest){
+    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody UserRequest userRequest) {
         User updatedUser = userService.updateUser(userId, userRequest);
         return ResponseEntity.ok(updatedUser);
     }
 
     @PatchMapping("/{userId}/delete")
-    public ResponseEntity<User> deleteUser(@PathVariable Long userId){
-         User deletedUser = userService.deleteUser(userId);
-         return ResponseEntity.ok(deletedUser);
+    public ResponseEntity<User> deleteUser(@PathVariable Long userId) {
+        User deletedUser = userService.deleteUser(userId);
+        return ResponseEntity.ok(deletedUser);
     }
-    
+
 }

@@ -31,4 +31,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
         @Query("SELECT p.stock FROM Product p WHERE p.id = ?1")
         int findStockById(Long productId);
+
+        @Query("SELECT p FROM Product p WHERE p.category.id = :categoryId AND LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
+        Page<Product> findByCategoryIdAndNameContainingIgnoreCase(
+                        @Param("categoryId") Long categoryId,
+                        @Param("name") String name,
+                        Pageable pageable);
+
 }

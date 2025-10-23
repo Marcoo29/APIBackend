@@ -73,6 +73,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/users").denyAll()
                 .requestMatchers(HttpMethod.PUT, "/users/{userId}/update").authenticated()
                 .requestMatchers(HttpMethod.PATCH, "/users/{userId}/delete").authenticated()
+                .requestMatchers(HttpMethod.GET, "/users/by-email/**").authenticated()
+
 
                 // IMAGE
                 .requestMatchers(HttpMethod.GET, "/images").permitAll()

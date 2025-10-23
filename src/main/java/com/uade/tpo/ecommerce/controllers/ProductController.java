@@ -42,8 +42,9 @@ public class ProductController {
             @PathVariable("id") Long categoryId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "12") int size,
-            @RequestParam(defaultValue = "name-asc") String sort) {
-        return productService.getProductsByCategory(categoryId, page, size, sort);
+            @RequestParam(defaultValue = "name-asc") String sort,
+            @RequestParam(required = false) String searchTerm) {
+        return productService.getProductsByCategory(categoryId, page, size, sort, searchTerm);
     }
 
     @PostMapping
