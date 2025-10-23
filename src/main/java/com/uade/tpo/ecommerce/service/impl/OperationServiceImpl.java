@@ -42,6 +42,10 @@ public class OperationServiceImpl implements OperationService {
         return operationRepository.findById(operationId);
     }
 
+    public Page<Operation> getOperationsByEmail(String email, PageRequest pageable) {
+        return operationRepository.findByUserEmail(email, pageable);
+    }
+
     @Transactional
     public Operation createOperation(OperationRequest operationRequest) {
         User user = userService.getUserById(operationRequest.getUserId())

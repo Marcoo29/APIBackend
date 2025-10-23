@@ -23,8 +23,6 @@ import com.uade.tpo.ecommerce.entity.dto.OperationRequest;
 import com.uade.tpo.ecommerce.service.inter.OperationService;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
-
 @RestController
 @RequestMapping("operations")
 
@@ -51,25 +49,44 @@ public class OperationsController {
         return ResponseEntity.noContent().build();
     }
 
-   
+    @GetMapping("/by-email/{email}")
+    public ResponseEntity<Page<Operation>> getOperationsByEmail(
+            @PathVariable String email,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
+
+        // Si no se pasan page/size, devolvemos todas las operaciones sin paginar
+        if (page == null || size == null) {
+            Page<Operation> operations = operationService.getOperationsByEmail(email,
+                    PageRequest.of(0, Integer.MAX_VALUE));
+            return ResponseEntity.ok(operations);
+        }
+
+        Page<Operation> operations = operationService.getOperationsByEmail(email, PageRequest.of(page, size));
+        return ResponseEntity.ok(operations);
+    }
 
     @PostMapping
-    public ResponseEntity<Object> createOperation(@RequestBody OperationRequest operationRequest){
+    public ResponseEntity<Object> createOperation(@RequestBody OperationRequest operationRequest) {
         Operation result = operationService.createOperation(operationRequest);
         return ResponseEntity.created(URI.create("/operations/" + result.getId())).body(result);
     }
 
     @PostMapping("/{operationId}/details")
-    public ResponseEntity<OperationDetail> addProductToOperation(@PathVariable Long operationId, @RequestBody OperationDetailRequest operationDetailrequest) {
-    
-        OperationDetail detail = operationService.addProduct(operationId, operationDetailrequest.getProductId(), operationDetailrequest.getQuantity());
+    public ResponseEntity<OperationDetail> addProductToOperation(@PathVariable Long operationId,
+            @RequestBody OperationDetailRequest operationDetailrequest) {
+
+        OperationDetail detail = operationService.addProduct(operationId, operationDetailrequest.getProductId(),
+                operationDetailrequest.getQuantity());
         return ResponseEntity.ok(detail);
     }
 
     // @PutMapping("/{operationId}/update")
-    // public ResponseEntity<Operation> updateOperation(@PathVariable Long operationId, @RequestBody OperationRequest operationRequest){
-    //     Operation updatedOperation = operationService.updateOperation(operationId, operationRequest);
-    //     return ResponseEntity.ok(updatedOperation);
+    // public ResponseEntity<Operation> updateOperation(@PathVariable Long
+    // operationId, @RequestBody OperationRequest operationRequest){
+    // Operation updatedOperation = operationService.updateOperation(operationId,
+    // operationRequest);
+    // return ResponseEntity.ok(updatedOperation);
     // }
 
     @DeleteMapping("/{operationId}/delete")
@@ -77,7 +94,5 @@ public class OperationsController {
         operationService.deleteOperation(operationId);
         return null;
     }
-
-    
 
 }
