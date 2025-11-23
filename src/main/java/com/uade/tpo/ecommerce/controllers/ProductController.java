@@ -53,6 +53,7 @@ public class ProductController {
     }
 
     @PutMapping("/{productId}/update")
+    @PreAuthorize("hasRole('ADMIN')")
     public Product updateProduct(@PathVariable Long productId, @RequestBody ProductRequest productRequest) {
         return productService.updateProduct(productId, productRequest);
     }
