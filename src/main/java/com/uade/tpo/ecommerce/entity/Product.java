@@ -39,7 +39,7 @@ public class Product {
     @Column
     private int stock;
 
-    @Column
+    @Column (length = 1000)
     private String description;
 
     @Column
