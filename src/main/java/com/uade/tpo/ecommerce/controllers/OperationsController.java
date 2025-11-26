@@ -20,6 +20,7 @@ import com.uade.tpo.ecommerce.entity.Operation;
 import com.uade.tpo.ecommerce.entity.OperationDetail;
 import com.uade.tpo.ecommerce.entity.dto.OperationDetailRequest;
 import com.uade.tpo.ecommerce.entity.dto.OperationRequest;
+import com.uade.tpo.ecommerce.entity.enums.OperationStatus;
 import com.uade.tpo.ecommerce.service.inter.OperationService;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -79,6 +80,23 @@ public class OperationsController {
         OperationDetail detail = operationService.addProduct(operationId, operationDetailrequest.getProductId(),
                 operationDetailrequest.getQuantity());
         return ResponseEntity.ok(detail);
+    }
+
+    @PutMapping("/{operationId}/update-status")
+    public ResponseEntity<Operation> updateOperationStatus(
+            @PathVariable Long operationId,
+            @RequestParam OperationStatus newStatus) {
+
+        Optional<Operation> opOptional = operationService.getOperationById(operationId);
+        if (!opOptional.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Operation operation = opOptional.get();
+        operation.setOperationStatus(newStatus);
+        operationService.saveOperation(operation); // agregamos método save en el service
+
+        return ResponseEntity.ok(operation);
     }
 
     // @PutMapping("/{operationId}/update")

@@ -7,7 +7,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uade.tpo.ecommerce.entity.Operation;
 import com.uade.tpo.ecommerce.entity.OperationDetail;
@@ -24,7 +28,7 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class OperationServiceImpl implements OperationService {
-    
+
     @Autowired
     private OperationRepository operationRepository;
 
@@ -49,7 +53,7 @@ public class OperationServiceImpl implements OperationService {
     @Transactional
     public Operation createOperation(OperationRequest operationRequest) {
         User user = userService.getUserById(operationRequest.getUserId())
-        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         LocalDateTime date = LocalDateTime.now();
 
@@ -61,7 +65,7 @@ public class OperationServiceImpl implements OperationService {
 
         for (var detailRequest : operationRequest.getOperationDetails()) {
             Product product = productRepository.findById(detailRequest.getProductId())
-            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                    .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
             int quantity = detailRequest.getQuantity();
             if (product.getStock() < quantity) {
@@ -85,10 +89,10 @@ public class OperationServiceImpl implements OperationService {
 
     public OperationDetail addProduct(Long operationId, Long productId, int quantity) {
         Operation operation = operationRepository.findById(operationId)
-        .orElseThrow(() -> new RuntimeException("Operación no encontrada"));
+                .orElseThrow(() -> new RuntimeException("Operación no encontrada"));
 
         Product product = productRepository.findById(productId)
-        .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
         OperationDetail detail = new OperationDetail();
         detail.setOperation(operation);
@@ -103,26 +107,19 @@ public class OperationServiceImpl implements OperationService {
         return detail;
     }
 
-    // public Operation updateOperation(Long operationId, OperationRequest operationRequest){
-    //     Operation operation = operationRepository.findById(operationId)
-    //         .orElseThrow(() -> new RuntimeException("Operación no encontrada"));
-
-    //     if (operationRequest.getTotal() != 0) operation.setTotal(operationRequest.getTotal());
-    //     if (operationRequest.getOperationStatus() != null) operation.setOperationStatus(operationRequest.getOperationStatus());
-    //     if (operationRequest.getPayMethod() != null) operation.setPayMethod(operationRequest.getPayMethod());
-
-    //     return operationRepository.save(operation);
-    // }
+    @Override
+    public Operation saveOperation(Operation operation) {
+        return operationRepository.save(operation);
+    }
 
     public Operation deleteOperation(Long operationId) {
-         Optional<Operation> optionalOperation = operationRepository.findById(operationId);
+        Optional<Operation> optionalOperation = operationRepository.findById(operationId);
         if (optionalOperation.isPresent()) {
             Operation operation = optionalOperation.get();
             operation.setOperationStatus(com.uade.tpo.ecommerce.entity.enums.OperationStatus.CANCELLED);
             return (operationRepository.save(operation));
         }
- 
+
         throw new RuntimeException("Operación no encontrada");
     }
 }
-

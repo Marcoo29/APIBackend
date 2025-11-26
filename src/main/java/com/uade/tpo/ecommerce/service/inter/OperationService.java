@@ -19,7 +19,7 @@ public interface OperationService {
 
     public Page<Operation> getOperationsByEmail(String email, PageRequest pageable);
 
-    // public Operation updateOperation(Long operationId, OperationRequest operationRequest);
+    public Operation saveOperation(Operation operation);
 
     public OperationDetail addProduct(Long operationId, Long productId, int quantity);
 

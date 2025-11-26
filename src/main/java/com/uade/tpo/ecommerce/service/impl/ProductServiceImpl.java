@@ -83,9 +83,9 @@ public class ProductServiceImpl implements ProductService {
         PageRequest pageable = PageRequest.of(page, size, sort);
 
         if (searchTerm != null && !searchTerm.isEmpty()) {
-            return productRepository.findByCategoryIdAndNameContainingIgnoreCase(categoryId, searchTerm, pageable);
+            return productRepository.findAvailableByCategoryAndNameContaining(categoryId, searchTerm, pageable);
         } else {
-            return productRepository.findByCategoryId(categoryId, pageable);
+            return productRepository.findAvailableByCategory(categoryId, pageable);
         }
     }
 
