@@ -66,7 +66,21 @@ public class ProductController {
     @GetMapping("/all")
     public List<Product> getAllProducts() {
         List<Product> all = productService.getAllProducts();
-        System.out.println("🔍 Total productos: " + all.size());
         return all;
+    }
+
+    @PutMapping("/{productId}/discount")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Product setDiscount(
+            @PathVariable Long productId,
+            @RequestParam("discountPrice") float discountPrice) {
+
+        return productService.setDiscountPrice(productId, discountPrice);
+    }
+
+    @DeleteMapping("/{productId}/discount")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Product clearDiscount(@PathVariable Long productId) {
+        return productService.clearDiscount(productId);
     }
 }

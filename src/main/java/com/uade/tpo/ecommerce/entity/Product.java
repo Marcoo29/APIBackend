@@ -34,6 +34,9 @@ public class Product {
     private float price;
 
     @Column
+    private Float discountPrice;
+
+    @Column
     private String manufacturer;
 
     @Column
@@ -55,4 +58,15 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Image> images = new ArrayList<>();
+
+    public float getPrice() {
+        if (discountPrice != null && discountPrice > 0) {
+            return discountPrice;
+        }
+        return price;
+    }
+
+    public float getBasePrice() {
+        return price;
+    }
 }

@@ -25,4 +25,8 @@ public interface ProductService {
     void deleteProduct(Long productId);
 
     List<Product> getAllProducts();
+
+    Product setDiscountPrice(Long productId, float discountPrice);
+
+    Product clearDiscount(Long productId);
 }

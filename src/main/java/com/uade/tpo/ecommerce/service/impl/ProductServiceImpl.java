@@ -158,4 +158,32 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
+    @Override
+    public Product setDiscountPrice(Long productId, float discountPrice) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        if (discountPrice <= 0) {
+            throw new RuntimeException("El precio con descuento debe ser mayor a 0");
+        }
+
+        // Usamos el precio base para validar
+        float basePrice = product.getBasePrice();
+        if (discountPrice >= basePrice) {
+            throw new RuntimeException("El precio con descuento debe ser menor al precio original (" + basePrice + ")");
+        }
+
+        product.setDiscountPrice(discountPrice);
+        return productRepository.save(product);
+    }
+
+    @Override
+    public Product clearDiscount(Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        product.setDiscountPrice(null);
+        return productRepository.save(product);
+    }
+
 }
